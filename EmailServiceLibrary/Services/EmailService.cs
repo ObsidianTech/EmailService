@@ -17,8 +17,8 @@ namespace EmailServiceLibrary.Services
             {
                 msg.To.Add(new MailAddress(email.ReceivingAddress, "To Name"));
                 msg.From = new MailAddress(email.SendingAddress, "From Name" );
-                msg.Subject = "Subject";
-                msg.Body = "Body";
+                msg.Subject = email.Subject;
+                msg.Body = email.Body;
                 msg.IsBodyHtml = true;
 
                 using (var client = new SmtpClient("smtp.gmail.com"))
