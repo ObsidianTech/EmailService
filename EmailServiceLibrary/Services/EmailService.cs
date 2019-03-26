@@ -9,14 +9,21 @@ using Microsoft.Extensions.Configuration;
 
 namespace EmailServiceLibrary.Services
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
+        public IConfiguration configuration { get; set; }
+
+        public EmailService(IConfiguration config)
+        {
+            configuration = config;
+        }
+
         public string SendEmail(Email email)
         {
             using (var msg = new MailMessage())
             {
                 msg.To.Add(new MailAddress(email.ReceivingAddress, "To Name"));
-                msg.From = new MailAddress(email.SendingAddress, "From Name" );
+                msg.From = new MailAddress(configuration["ClientEmail"], "From Name" );
                 msg.Subject = email.Subject;
                 msg.Body = email.Body;
                 msg.IsBodyHtml = true;

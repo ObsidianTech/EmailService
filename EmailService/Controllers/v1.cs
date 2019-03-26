@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EmailServiceLibrary.Services;
-using EmailServiceLibrary.Interfaces.FactoryInterfaces;
 using EmailServiceLibrary.Models;
 using Microsoft.Extensions.Configuration;
+using EmailServiceLibrary.Interfaces;
 
 namespace EmailMicroservice.Controllers
 {
@@ -14,13 +14,11 @@ namespace EmailMicroservice.Controllers
     [ApiController]
     public class v1 : ControllerBase
     {
-        public EmailService es { get; set; }
-        public IConfiguration _config { get; set; }
+        public IEmailService es { get; set; }
 
-        public v1(IEmailServiceFactory emailServiceFactory, IConfiguration config)
+        public v1(IEmailService emailService)
         {
-            es = emailServiceFactory.EmailService;
-            _config = config;
+            es = emailService;
         }
 
         [Route("email")]
@@ -28,7 +26,6 @@ namespace EmailMicroservice.Controllers
         [HttpPost]
         public string Post([FromBody] Email email)
         {
-            email.SendingAddress = _config["ClientEmail"];
             return es.SendEmail(email);
         }
     }
