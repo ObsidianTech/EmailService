@@ -21,12 +21,11 @@ namespace EmailMicroservice.Controllers
             es = emailService;
         }
 
-        [Route("email")]
-        // POST api/values
-        [HttpPost]
-        public string Post([FromBody] Email email)
+        [Route("email/{emailAddress}")]
+        [HttpGet]
+        public string Post(string emailAddress)
         {
-            return es.SendEmail(email);
+            return es.SendEmail(emailAddress);
         }
     }
 }

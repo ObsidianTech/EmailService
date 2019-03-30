@@ -10,6 +10,7 @@ namespace EmailServiceLibrary.Interfaces
     {
         IConfiguration configuration { get; set; }
 
-        string SendEmail(Email email);
+        //string SendEmail(Email email);
+        string SendEmail(string emailAddress);
     }
 }
